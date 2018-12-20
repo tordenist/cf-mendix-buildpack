@@ -63,14 +63,14 @@ def get_current_git_commit():
         short_commit = commit[:7]
         return short_commit
     except Exception:
-        logger.warning("MENDIX BUILDPACK: Unable to determine exact version "
+        logging.warning("MENDIX BUILDPACK: Unable to determine exact version "
             "in use. This is nothing to worry about", exc_info=True)
         return 'unknown_commit'
 
 def write_current_git_commit():
     short_commit = get_current_git_commit()
     with open(os.path.join(BUILD_DIR, '.buildpack_commit'), 'w') as version_file:
-        logger.warning("Building with commit %s", short_commit)
+        logging.warning("Building with commit %s", short_commit)
         version_file.write(short_commit)
 
 def set_up_appdynamics():
