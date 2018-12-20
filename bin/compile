@@ -23,7 +23,7 @@ from m2ee.version import MXVersion
 
 
 print(subprocess.check_call(['ls', '-latr', BUILDPACK_DIR]))
-print(subprocess.check_call(['git', 'rev-parse', 'HEAD']))
+print(subprocess.check_call(['git', 'rev-parse', 'HEAD'], cwd=BUILDPACK_DIR))
 
 logging.basicConfig(
     level=buildpackutil.get_buildpack_loglevel(),
