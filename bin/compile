@@ -59,6 +59,21 @@ def check_environment_variable(variable, explanation):
     else:
         return True
 
+def get_current_git_commit():
+    try:
+        raw_commit = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=BUILDPACK_DIR)
+        commit = raw_commit.decode('utf-8').strip()
+        short_commit = commit[:7]
+        return short_commit
+    except Exception:
+        logger.warning("MENDIX BUILDPACK: Unable to determine exact version "
+            "in use. This is nothing to worry about", exc_info=True)
+        return 'unknown_commit'
+
+def wrte_current_git_commit():
+    short_commit = get_current_git_commit()
+    with open(os.path.join('BUILD_DIR', '.buildpack_commit'), 'w') as version_file:
+        version_file.write(short_commit)
 
 def set_up_appdynamics():
     if buildpackutil.appdynamics_used():
@@ -296,5 +311,6 @@ if __name__ == '__main__':
     datadog.compile(DOT_LOCAL_LOCATION, CACHE_DIR)
     download_mendix_version()
     copy_buildpack_resources()
+    write_current_git_commit()
     set_up_nginx()
     logging.info('buildpack compile completed')
