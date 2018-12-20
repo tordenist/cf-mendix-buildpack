@@ -59,6 +59,7 @@ try:
         short_commit = commit_file.readline().strip()
         logger.info("Current buildpack commit: %s". short_commit)
 except Exception:
+    logger.warning("failed to read file", exc_info=True)
     logger.info("Current buildpack commit unknown.")
 
 logging.getLogger("m2ee").propagate = False
