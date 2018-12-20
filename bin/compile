@@ -22,6 +22,8 @@ import buildpackutil
 from m2ee.version import MXVersion
 
 
+print(subprocess.check_call(['ls', BUILDPACK_DIR]))
+
 logging.basicConfig(
     level=buildpackutil.get_buildpack_loglevel(),
     stream=sys.stdout,
