@@ -69,7 +69,7 @@ def get_current_git_commit():
 
 def write_current_git_commit():
     short_commit = get_current_git_commit()
-    with open(os.path.join('BUILD_DIR', '.buildpack_commit'), 'w') as version_file:
+    with open(os.path.join(BUILD_DIR, '.buildpack_commit'), 'w') as version_file:
         version_file.write(short_commit)
 
 def set_up_appdynamics():
