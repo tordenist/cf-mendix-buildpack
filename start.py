@@ -57,7 +57,7 @@ logger.info("Started Mendix Cloud Foundry Buildpack v2.2.999")
 try:
     with open('.buildpack_commit', 'r') as commit_file:
         short_commit = commit_file.readline().strip()
-        logger.info("Current buildpack commit: %s". short_commit)
+        logger.info("Current buildpack commit: %s", short_commit)
 except Exception:
     logger.warning("failed to read file", exc_info=True)
     logger.info("Current buildpack commit unknown.")
