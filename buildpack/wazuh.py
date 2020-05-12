@@ -34,8 +34,8 @@ def _set_up_ossec_user():
 # TEST S3 BUCKET
 def download_wazuh():
     url = 'http://wazuh-agent-test-bucket.s3.eu-west-2.amazonaws.com/wazuh-agent.tar.gz'
-    urllib.request.urlretrieve(url, '/var/wazuh-agent.tar.gz')
-    tar = tarfile.open("/var/wazuh-agent.tar.gz")
+    urllib.request.urlretrieve(url, '/tmp/downloads/wazuh-agent.tar.gz')
+    tar = tarfile.open("/tmp/downloads/wazuh-agent.tar.gz")
     tar.extractall("/var/")
     tar.close()
     _set_up_ossec_group()
