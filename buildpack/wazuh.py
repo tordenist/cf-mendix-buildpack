@@ -3,8 +3,6 @@ import subprocess
 import urllib.request
 import tarfile
 
-WAZUH_AGENT_BLOB = "wazuh-agent-v3.12-ubuntu.tar.gz"
-
 WAZUH_ROOT_DIR = "/var/ossec"
 WAZUH_CONFIG_DIR = WAZUH_ROOT_DIR + "/etc/"
 WAZUH_BIN_DIR = WAZUH_ROOT_DIR + "/bin"
@@ -29,20 +27,6 @@ def _set_up_ossec_group():
 
 def _set_up_ossec_user():
     os.system("adduser --system --home /var/ossec --shell /sbin/nologin --ingroup ossec ossec")
-
-
-# TEST S3 BUCKET
-def download_wazuh():
-    url = "http://wazuh-agent-test-bucket.s3.eu-west-2.amazonaws.com/wazuh-agent.tar.gz"
-    urllib.request.urlretrieve(url, "/tmp/downloads/wazuh-agent.tar.gz")
-    tar = tarfile.open("/tmp/downloads/wazuh-agent.tar.gz")
-    tar.extractall("/var/")
-    tar.close()
-    _set_up_ossec_group()
-    _set_up_ossec_user()
-    _set_up_ossec_init()
-    _set_up_wazuh_agent()
-
 
 def _set_up_ossec_init():
 
@@ -73,6 +57,19 @@ def _set_up_wazuh_agent():
         )
         with open(WAZUH_CONFIG_DIR + "ossec.conf", "w") as fh:
             fh.write(lines)
+
+
+# TEST S3 BUCKET
+def download_wazuh():
+    url = "http://wazuh-agent-test-bucket.s3.eu-west-2.amazonaws.com/wazuh-agent.tar.gz"
+    urllib.request.urlretrieve(url, "/tmp/wazuh-agent.tar.gz")
+    tar = tarfile.open("/tmp/wazuh-agent.tar.gz")
+    tar.extractall("/var/")
+    tar.close()
+    _set_up_ossec_group()
+    _set_up_ossec_user()
+    _set_up_ossec_init()
+    _set_up_wazuh_agent()
 
 
 def start_wazuh_auth():
