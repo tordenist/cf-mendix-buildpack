@@ -57,7 +57,7 @@ install_lint_requirements: install_piptools
 
 .PHONY: lint
 lint:
-	black --line-length=79 --check --diff $(PACKAGE_NAME) tests/*/
+	black --line-length=79 --check --diff $(PACKAGE_NAME) lib/m2ee/* tests/*/
 	pylint --disable=W,R,C $(PACKAGE_NAME) tests/*/
 
 .PHONY: install_test_requirements
