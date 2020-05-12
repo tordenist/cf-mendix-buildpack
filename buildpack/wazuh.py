@@ -33,8 +33,8 @@ def _set_up_ossec_user():
 
 # TEST S3 BUCKET
 def download_wazuh():
-    url = 'http://wazuh-agent-test-bucket.s3.eu-west-2.amazonaws.com/wazuh-agent.tar.gz'
-    urllib.request.urlretrieve(url, '/tmp/downloads/wazuh-agent.tar.gz')
+    url = "http://wazuh-agent-test-bucket.s3.eu-west-2.amazonaws.com/wazuh-agent.tar.gz"
+    urllib.request.urlretrieve(url, "/tmp/downloads/wazuh-agent.tar.gz")
     tar = tarfile.open("/tmp/downloads/wazuh-agent.tar.gz")
     tar.extractall("/var/")
     tar.close()
@@ -58,7 +58,7 @@ TYPE="agent"
      "CURRENT_DATE": CURRENT_DATE
      }
 
-    with open('/etc/ossec-init.conf', 'w') as myfile:
+    with open("/etc/ossec-init.conf", "w") as myfile:
         myfile.write(template.format(**context))
 
 
@@ -88,8 +88,3 @@ def start_wazuh_agent():
     wazuh_agent = subprocess.Popen(
         ["/var/ossec/bin/ossec-control", "start"]
     )
-
-
-download_wazuh()
-start_wazuh_auth()
-start_wazuh_agent()
