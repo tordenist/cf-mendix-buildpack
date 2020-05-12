@@ -23,6 +23,7 @@ from buildpack import (
     runtime,
     telegraf,
     util,
+    wazuh
 )
 from buildpack.runtime_components import security
 from lib.m2ee import M2EE as m2ee_class
@@ -298,6 +299,9 @@ if __name__ == "__main__":
         nginx.set_up_files(m2ee)
         telegraf.run()
         datadog.run(m2ee.config.get_runtime_version())
+        wazuh.download_wazuh()
+        wazuh.start_wazuh_auth()
+        wazuh.start_wazuh_agent()
         runtime.run(m2ee)
         set_up_instadeploy_if_deploy_password_is_set(m2ee)
         runtime.run_components(m2ee)
