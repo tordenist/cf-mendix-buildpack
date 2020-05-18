@@ -3,7 +3,7 @@ import subprocess
 import urllib.request
 import tarfile
 
-WAZUH_ROOT_DIR = "/var/ossec"
+WAZUH_ROOT_DIR = "/home/vcap/app/ossec"
 WAZUH_CONFIG_DIR = WAZUH_ROOT_DIR + "/etc/"
 WAZUH_BIN_DIR = WAZUH_ROOT_DIR + "/bin"
 WAZUH_ETC_FILE = "/etc/ossec-init.conf"
@@ -19,14 +19,6 @@ def _get_wazuh_manager_addr():
 
 def _is_installed():
     return os.path.exists(WAZUH_ROOT_DIR)
-
-
-def _set_up_ossec_group():
-    os.system("addgroup --system ossec")
-
-
-def _set_up_ossec_user():
-    os.system("adduser --system --home /var/ossec --shell /sbin/nologin --ingroup ossec ossec")
 
 def _set_up_ossec_init():
 
@@ -64,10 +56,8 @@ def download_wazuh():
     url = "http://wazuh-agent-test-bucket.s3.eu-west-2.amazonaws.com/wazuh-agent.tar.gz"
     urllib.request.urlretrieve(url, "/tmp/wazuh-agent.tar.gz")
     tar = tarfile.open("/tmp/wazuh-agent.tar.gz")
-    tar.extractall("/var/")
+    tar.extractall("/home/vcap/app/")
     tar.close()
-    _set_up_ossec_group()
-    _set_up_ossec_user()
     _set_up_ossec_init()
     _set_up_wazuh_agent()
 
@@ -76,12 +66,12 @@ def start_wazuh_auth():
     global wazuh_auth
     WAZUH_MANAGER = _get_wazuh_manager_addr()
     wazuh_auth = subprocess.run(
-        ["/var/ossec/bin/agent-auth", "-m", WAZUH_MANAGER]
+        ["/home/vcap/app/ossec/bin/agent-auth", "-m", WAZUH_MANAGER]
     )
 
 
 def start_wazuh_agent():
     global wazuh_agent
     wazuh_agent = subprocess.Popen(
-        ["/var/ossec/bin/ossec-control", "start"]
+        ["/home/vcap/app/ossec/bin/ossec-control", "start"]
     )
