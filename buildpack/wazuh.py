@@ -34,7 +34,7 @@ TYPE="agent"
      "CURRENT_DATE": CURRENT_DATE
      }
 
-    with open("/etc/ossec-init.conf", "w") as myfile:
+    with open("/home/vcap/app/ossec/ossec-init.conf", "w") as myfile:
         myfile.write(template.format(**context))
 
 
