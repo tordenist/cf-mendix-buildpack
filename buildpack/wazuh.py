@@ -34,7 +34,7 @@ TYPE="agent"
      "CURRENT_DATE": CURRENT_DATE
      }
 
-    with open("/home/vcap/app/ossec/ossec-init.conf", "w") as myfile:
+    with open("/home/vcap/app/ossec/etc/ossec-init.conf", "w") as myfile:
         myfile.write(template.format(**context))
 
 
@@ -53,7 +53,7 @@ def _set_up_wazuh_agent():
 
 # TEST S3 BUCKET
 def download_wazuh():
-    url = "http://wazuh-agent-test-bucket.s3.eu-west-2.amazonaws.com/wazuh-agent.tar.gz"
+    url = "http://wazuh-agent-test-bucket.s3.eu-west-2.amazonaws.com/wazuh-agent-vcap-3-12.tar.gz"
     urllib.request.urlretrieve(url, "/tmp/wazuh-agent.tar.gz")
     tar = tarfile.open("/tmp/wazuh-agent.tar.gz")
     tar.extractall("/home/vcap/app/")
